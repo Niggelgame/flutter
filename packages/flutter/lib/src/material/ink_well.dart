@@ -9,7 +9,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../rendering.dart';
 import 'debug.dart';
 import 'feedback.dart';
 import 'ink_highlight.dart';
