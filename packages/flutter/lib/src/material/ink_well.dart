@@ -9,6 +9,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../rendering.dart';
 import 'debug.dart';
 import 'feedback.dart';
 import 'ink_highlight.dart';
@@ -318,6 +319,7 @@ class InkResponse extends StatelessWidget {
     this.canRequestFocus = true,
     this.onFocusChange,
     this.autofocus = false,
+    this.hitTestBehavior,
   }) : assert(containedInkWell != null),
        assert(highlightShape != null),
        assert(enableFeedback != null),
@@ -563,6 +565,11 @@ class InkResponse extends StatelessWidget {
   /// {@macro flutter.widgets.Focus.canRequestFocus}
   final bool canRequestFocus;
 
+  /// Sets the underlying [GestureDetector.hitTestBehavior].
+  /// 
+  /// Defaults to [HitTestBehavior.opaque].
+  final HitTestBehavior? hitTestBehavior;
+
   /// The rectangle to use for the highlight effect and for clipping
   /// the splash effects if [containedInkWell] is true.
   ///
@@ -608,6 +615,7 @@ class InkResponse extends StatelessWidget {
       parentState: parentState,
       getRectCallback: getRectCallback,
       debugCheckContext: debugCheckContext,
+      hitTestBehavior: hitTestBehavior,
       child: child,
     );
   }
@@ -657,6 +665,7 @@ class _InkResponseStateWidget extends StatefulWidget {
     this.autofocus = false,
     this.parentState,
     this.getRectCallback,
+    this.hitTestBehavior,
     required this.debugCheckContext,
   }) : assert(containedInkWell != null),
        assert(highlightShape != null),
@@ -691,6 +700,7 @@ class _InkResponseStateWidget extends StatefulWidget {
   final bool autofocus;
   final FocusNode? focusNode;
   final bool canRequestFocus;
+  final HitTestBehavior? hitTestBehavior;
   final _ParentInkResponseState? parentState;
   final _GetRectCallback? getRectCallback;
   final _CheckContext debugCheckContext;
@@ -1106,7 +1116,7 @@ class _InkResponseState extends State<_InkResponseStateWidget>
                 onTapCancel: enabled ? _handleTapCancel : null,
                 onDoubleTap: widget.onDoubleTap != null ? _handleDoubleTap : null,
                 onLongPress: widget.onLongPress != null ? _handleLongPress : null,
-                behavior: HitTestBehavior.opaque,
+                behavior: widget.hitTestBehaviour ?? HitTestBehavior.opaque,
                 excludeFromSemantics: true,
                 child: widget.child,
               ),
@@ -1217,6 +1227,7 @@ class InkWell extends InkResponse {
     bool canRequestFocus = true,
     ValueChanged<bool>? onFocusChange,
     bool autofocus = false,
+    HitTestBehavior? hitTestBehavior,
   }) : super(
     key: key,
     child: child,
@@ -1245,5 +1256,6 @@ class InkWell extends InkResponse {
     canRequestFocus: canRequestFocus,
     onFocusChange: onFocusChange,
     autofocus: autofocus,
+    hitTestBehavior: hitTestBehavior,
   );
 }
