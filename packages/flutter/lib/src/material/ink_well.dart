@@ -1115,7 +1115,7 @@ class _InkResponseState extends State<_InkResponseStateWidget>
                 onTapCancel: enabled ? _handleTapCancel : null,
                 onDoubleTap: widget.onDoubleTap != null ? _handleDoubleTap : null,
                 onLongPress: widget.onLongPress != null ? _handleLongPress : null,
-                behavior: widget.hitTestBehaviour ?? HitTestBehavior.opaque,
+                behavior: widget.hitTestBehavior ?? HitTestBehavior.opaque,
                 excludeFromSemantics: true,
                 child: widget.child,
               ),
